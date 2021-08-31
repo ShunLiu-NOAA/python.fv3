@@ -40,30 +40,31 @@ wgrib2 /gpfs/dell1/nco/ops/com/gfs/prod/gdas.${PDYm1}/${cycm1}/atmos/gdas.t${cyc
 # Run Python scripts - submit a separate job for each tmmark with Rocoto
 
 python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/increments_lamda.py ${CDATE} ${tmmark}
-python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/increments_lamdax.py ${CDATE} ${tmmark}
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/increments_rdas_conus.py ${CDATE} ${tmmark}
+#python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/increments_lamdax.py ${CDATE} ${tmmark}
 
 if [ $tmmark != tm06 ]; then
-  convert lamda_tlvl1_conus_${tmmark}.png lamdax_tlvl1_conus_${tmmark}.png +append tlvl1_conus_${tmmark}.png
-  convert lamda_qlvl1_conus_${tmmark}.png lamdax_qlvl1_conus_${tmmark}.png +append qlvl1_conus_${tmmark}.png
-  convert lamda_wspdlvl1_conus_${tmmark}.png lamdax_wspdlvl1_conus_${tmmark}.png +append wspdlvl1_conus_${tmmark}.png
+  convert lamda_tlvl1_conus_${tmmark}.png rdas_tlvl1_conus_${tmmark}.png +append tlvl1_conus_${tmmark}.png
+  convert lamda_qlvl1_conus_${tmmark}.png rdas_qlvl1_conus_${tmmark}.png +append qlvl1_conus_${tmmark}.png
+  convert lamda_wspdlvl1_conus_${tmmark}.png rdas_wspdlvl1_conus_${tmmark}.png +append wspdlvl1_conus_${tmmark}.png
 fi
-convert lamda_slp_conus_${tmmark}.png lamdax_slp_conus_${tmmark}.png +append slp_conus_${tmmark}.png
-convert lamda_pw_conus_${tmmark}.png lamdax_pw_conus_${tmmark}.png +append pw_conus_${tmmark}.png
-convert lamda_z850_conus_${tmmark}.png lamdax_z850_conus_${tmmark}.png +append z850_conus_${tmmark}.png
-convert lamda_z700_conus_${tmmark}.png lamdax_z700_conus_${tmmark}.png +append z700_conus_${tmmark}.png
-convert lamda_z500_conus_${tmmark}.png lamdax_z500_conus_${tmmark}.png +append z500_conus_${tmmark}.png
-convert lamda_z250_conus_${tmmark}.png lamdax_z250_conus_${tmmark}.png +append z250_conus_${tmmark}.png
-convert lamda_t850_conus_${tmmark}.png lamdax_t850_conus_${tmmark}.png +append t850_conus_${tmmark}.png
-convert lamda_t700_conus_${tmmark}.png lamdax_t700_conus_${tmmark}.png +append t700_conus_${tmmark}.png
-convert lamda_t500_conus_${tmmark}.png lamdax_t500_conus_${tmmark}.png +append t500_conus_${tmmark}.png
-convert lamda_t250_conus_${tmmark}.png lamdax_t250_conus_${tmmark}.png +append t250_conus_${tmmark}.png
-convert lamda_q850_conus_${tmmark}.png lamdax_q850_conus_${tmmark}.png +append q850_conus_${tmmark}.png
-convert lamda_q700_conus_${tmmark}.png lamdax_q700_conus_${tmmark}.png +append q700_conus_${tmmark}.png
-convert lamda_q500_conus_${tmmark}.png lamdax_q500_conus_${tmmark}.png +append q500_conus_${tmmark}.png
-convert lamda_wspd850_conus_${tmmark}.png lamdax_wspd850_conus_${tmmark}.png +append wspd850_conus_${tmmark}.png
-convert lamda_wspd700_conus_${tmmark}.png lamdax_wspd700_conus_${tmmark}.png +append wspd700_conus_${tmmark}.png
-convert lamda_wspd500_conus_${tmmark}.png lamdax_wspd500_conus_${tmmark}.png +append wspd500_conus_${tmmark}.png
-convert lamda_wspd250_conus_${tmmark}.png lamdax_wspd250_conus_${tmmark}.png +append wspd250_conus_${tmmark}.png
+convert lamda_slp_conus_${tmmark}.png rdas_slp_conus_${tmmark}.png +append slp_conus_${tmmark}.png
+convert lamda_pw_conus_${tmmark}.png rdas_pw_conus_${tmmark}.png +append pw_conus_${tmmark}.png
+convert lamda_z850_conus_${tmmark}.png rdas_z850_conus_${tmmark}.png +append z850_conus_${tmmark}.png
+convert lamda_z700_conus_${tmmark}.png rdas_z700_conus_${tmmark}.png +append z700_conus_${tmmark}.png
+convert lamda_z500_conus_${tmmark}.png rdas_z500_conus_${tmmark}.png +append z500_conus_${tmmark}.png
+convert lamda_z250_conus_${tmmark}.png rdas_z250_conus_${tmmark}.png +append z250_conus_${tmmark}.png
+convert lamda_t850_conus_${tmmark}.png rdas_t850_conus_${tmmark}.png +append t850_conus_${tmmark}.png
+convert lamda_t700_conus_${tmmark}.png rdas_t700_conus_${tmmark}.png +append t700_conus_${tmmark}.png
+convert lamda_t500_conus_${tmmark}.png rdas_t500_conus_${tmmark}.png +append t500_conus_${tmmark}.png
+convert lamda_t250_conus_${tmmark}.png rdas_t250_conus_${tmmark}.png +append t250_conus_${tmmark}.png
+convert lamda_q850_conus_${tmmark}.png rdas_q850_conus_${tmmark}.png +append q850_conus_${tmmark}.png
+convert lamda_q700_conus_${tmmark}.png rdas_q700_conus_${tmmark}.png +append q700_conus_${tmmark}.png
+convert lamda_q500_conus_${tmmark}.png rdas_q500_conus_${tmmark}.png +append q500_conus_${tmmark}.png
+convert lamda_wspd850_conus_${tmmark}.png rdas_wspd850_conus_${tmmark}.png +append wspd850_conus_${tmmark}.png
+convert lamda_wspd700_conus_${tmmark}.png rdas_wspd700_conus_${tmmark}.png +append wspd700_conus_${tmmark}.png
+convert lamda_wspd500_conus_${tmmark}.png rdas_wspd500_conus_${tmmark}.png +append wspd500_conus_${tmmark}.png
+convert lamda_wspd250_conus_${tmmark}.png rdas_wspd250_conus_${tmmark}.png +append wspd250_conus_${tmmark}.png
 
 exit
 
