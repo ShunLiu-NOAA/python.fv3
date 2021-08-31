@@ -1,0 +1,23 @@
+#!/bin/ksh
+set -x
+
+USER=Benjamin.Blake
+CDATE=2019042900
+cyc=00
+domain=conus
+
+echo 'into launchQPF'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/bin/loadp.sh
+
+#mkdir -p /gpfs/dell2/stmp/${USER}
+#mkdir -p /gpfs/dell2/stmp/${USER}/fv3nam
+#mkdir -p /gpfs/dell2/stmp/${USER}/fv3nam/$cyc
+#cd /gpfs/dell2/stmp/${USER}/fv3nam/$cyc
+
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_nam/plot_fv3_qpf_test.py $CDATE $domain 
+wait
+
+
+exit
+

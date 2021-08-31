@@ -1,0 +1,101 @@
+#!/bin/ksh
+set -x
+
+#USER=Benjamin.Blake
+#sdate=2021021200
+#sdatem1=2021021123
+#sdatem2=2021021122
+#sdatem3=2021021121
+#sdatem4=2021021120
+#sdatem5=2021021119
+#sdatem6=2021021118
+#PDY=20210212
+#cyc=00
+exp=lamda
+
+echo 'into launch_lamda_hist'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/bin/loadp.sh
+module load imagemagick/6.9.9-25
+
+mkdir -p /gpfs/dell3/stmp/${USER}
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor/$PDY
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor/$PDY/$cyc
+
+mkdir -p /gpfs/dell3/stmp/${USER}/cnvstat/${sdate}
+cd /gpfs/dell3/stmp/${USER}/cnvstat/${sdate}
+
+tmmarklist="tm00 tm01 tm02 tm03 tm04 tm05 tm06"
+for tmmark in $tmmarklist; do
+  mkdir -p $tmmark
+  cd $tmmark
+
+# Retrieve cnvstat file and untar to get diag files needed by script
+  cp /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc}/fv3lam.t${cyc}z.cnvstat.${tmmark} .
+  tar -xvf fv3lam.t${cyc}z.cnvstat.${tmmark}
+
+# Retrieve valid time of tmmark
+  if [ $tmmark = tm00 ]; then
+    tmdate=$sdate
+  elif [ $tmmark = tm01 ]; then
+    tmdate=$sdatem1
+  elif [ $tmmark = tm02 ]; then
+    tmdate=$sdatem2
+  elif [ $tmmark = tm03 ]; then
+    tmdate=$sdatem3
+  elif [ $tmmark = tm04 ]; then
+    tmdate=$sdatem4
+  elif [ $tmmark = tm05 ]; then
+    tmdate=$sdatem5
+  elif [ $tmmark = tm06 ]; then
+    tmdate=$sdatem6
+  fi
+
+  gunzip diag*gz
+
+# Modify yaml files for the date of interest
+  cp /gpfs/dell2/emc/modeling/noscrub/Shun.Liu/PyGSI/lamda_o-f_template.yaml .
+  sed 's/YYYYMMDDHH/'${sdate}'/g' lamda_o-f_template.yaml > tmpfile
+  sed 's/TMMARK/'${tmmark}'/g' tmpfile > tmpfile2
+  sed 's/TMDATE/'${tmdate}'/g' tmpfile2 > tmpfile3 ; mv tmpfile3 lamda_o-f.yaml
+
+  cp /gpfs/dell2/emc/modeling/noscrub/Shun.Liu/PyGSI/lamda_o-a_template.yaml .
+  sed 's/YYYYMMDDHH/'${sdate}'/g' lamda_o-a_template.yaml > tmpfile
+  sed 's/TMMARK/'${tmmark}'/g' tmpfile > tmpfile2
+  sed 's/TMDATE/'${tmdate}'/g' tmpfile2 > tmpfile3 ; mv tmpfile3 lamda_o-a.yaml
+  
+  cd ../
+done
+
+
+cd /gpfs/dell3/stmp/${USER}/damonitor/$PDY/$cyc
+
+# Run Python script for each tmmark
+for tmmark in $tmmarklist; do
+  python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/mp_plot_conv_diags_hist.py -y /gpfs/dell3/stmp/${USER}/cnvstat/${sdate}/${tmmark}/${exp}_o-f.yaml -e ${exp} -t ${tmmark} -o ./
+  python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/mp_plot_conv_diags_hist.py -y /gpfs/dell3/stmp/${USER}/cnvstat/${sdate}/${tmmark}/${exp}_o-a.yaml -e ${exp} -t ${tmmark} -o ./
+
+  convert ${exp}_conv_ps_o-f_metar_assimilated_${tmmark}.png ${exp}_conv_ps_o-a_metar_assimilated_${tmmark}.png +append ${exp}_conv_ps_metar_assimilated_${tmmark}.png
+  convert ${exp}_conv_ps_o-f_mesonet_assimilated_${tmmark}.png ${exp}_conv_ps_o-a_mesonet_assimilated_${tmmark}.png +append ${exp}_conv_ps_mesonet_assimilated_${tmmark}.png
+
+  convert ${exp}_conv_t_o-f_metar_assimilated_${tmmark}.png ${exp}_conv_t_o-a_metar_assimilated_${tmmark}.png +append ${exp}_conv_t_metar_assimilated_${tmmark}.png
+  convert ${exp}_conv_t_o-f_mesonet_assimilated_${tmmark}.png ${exp}_conv_t_o-a_mesonet_assimilated_${tmmark}.png +append ${exp}_conv_t_mesonet_assimilated_${tmmark}.png
+
+  convert ${exp}_conv_q_o-f_metar_assimilated_${tmmark}.png ${exp}_conv_q_o-a_metar_assimilated_${tmmark}.png +append ${exp}_conv_q_metar_assimilated_${tmmark}.png
+  convert ${exp}_conv_q_o-f_mesonet_assimilated_${tmmark}.png ${exp}_conv_q_o-a_mesonet_assimilated_${tmmark}.png +append ${exp}_conv_q_mesonet_assimilated_${tmmark}.png
+
+  convert ${exp}_conv_u_o-f_metar_assimilated_${tmmark}.png ${exp}_conv_u_o-a_metar_assimilated_${tmmark}.png +append ${exp}_conv_u_metar_assimilated_${tmmark}.png
+  convert ${exp}_conv_u_o-f_mesonet_assimilated_${tmmark}.png ${exp}_conv_u_o-a_mesonet_assimilated_${tmmark}.png +append ${exp}_conv_u_mesonet_assimilated_${tmmark}.png
+
+  convert ${exp}_conv_v_o-f_metar_assimilated_${tmmark}.png ${exp}_conv_v_o-a_metar_assimilated_${tmmark}.png +append ${exp}_conv_v_metar_assimilated_${tmmark}.png
+  convert ${exp}_conv_v_o-f_mesonet_assimilated_${tmmark}.png ${exp}_conv_v_o-a_mesonet_assimilated_${tmmark}.png +append ${exp}_conv_v_mesonet_assimilated_${tmmark}.png
+
+
+done
+
+rm -f ${exp}*o-f*.png
+rm -f ${exp}*o-a*.png
+
+exit
+

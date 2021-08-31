@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<!DOCTYPE workflow
+[
+
+<!ENTITY STARTYEAR "2021">
+<!ENTITY STARTMONTH "08">
+<!ENTITY STARTDAY "20">
+<!ENTITY STARTHOUR "00">
+
+<!ENTITY ENDYEAR "2021">
+<!ENTITY ENDMONTH "12">
+<!ENTITY ENDDAY "31">
+<!ENTITY ENDHOUR "12">
+
+<!ENTITY USER "Benjamin.Blake">
+<!ENTITY ACCOUNT "RRFS-T2O">
+
+<!ENTITY LOGDIR "/gpfs/dell3/ptmp/&USER;">
+<!ENTITY OUTDIR "/gpfs/dell4/ptmp/emc.campara">
+<!ENTITY OUTDIR2 "/gpfs/dell6/ptmp/emc.campara">
+<!ENTITY OUTDIR3 "/gpfs/dell5/ptmp/emc.campara">
+<!ENTITY OUTDIR4 "/gpfs/dell2/ptmp/emc.campara">
+<!ENTITY COMLAM "&OUTDIR;/fv3lam">
+<!ENTITY COMLAMX "&OUTDIR2;/fv3lamx">
+<!ENTITY COMLAMDA "&OUTDIR3;/fv3lamda">
+<!ENTITY COMLAMDAX "&OUTDIR4;/fv3lamdax">
+<!ENTITY COMGFS "/gpfs/dell1/nco/ops/com/gfs/prod">
+<!ENTITY COMNAM "/gpfs/dell1/nco/ops/com/nam/prod">
+<!ENTITY COMHRRR "/gpfs/hps/nco/ops/com/hrrr/prod">
+<!ENTITY PYTHONDIR "/gpfs/dell2/emc/modeling/noscrub/&USER;/python.fv3">
+<!ENTITY STMPDIR2 "/gpfs/dell3/stmp/&USER;/fv3">
+
+<!ENTITY RETRIEVE_RESERVATION '<queue>dev</queue><account>&ACCOUNT;</account>'>
+<!ENTITY PLOT_RESERVATION '<queue>dev</queue><account>&ACCOUNT;</account>'>
+<!ENTITY TRANS_RESERVATION '<queue>dev_transfer</queue><account>&ACCOUNT;</account>'>
+
+<!ENTITY RETRIEVE_RESOURCES '<walltime>00:30:00</walltime>'>
+<!ENTITY PLOT_RESOURCES '<walltime>01:10:00</walltime><memory>6G</memory>'>
+<!ENTITY NAMERICA_RESOURCES '<walltime>01:10:00</walltime><memory>9G</memory>'>
+<!ENTITY TRANS_RESOURCES '<walltime>01:30:00</walltime><memory>2048M</memory><cores>1</cores><native>-R affinity[core]</native>'>
+
+]>
+
+
+<!--  ************************************************************* -->
+<!--  ******************* STARTING THE WORKFLOW ******************* -->
+
+<!--  <workflow realtime="F" scheduler="lsf" taskthrottle="25"> -->
+<workflow realtime="F" scheduler="lsf" taskthrottle="100" cyclethrottle="1" cyclelifespan="00:18:00:00">
+
+  <cycledef group="conus">&STARTYEAR;&STARTMONTH;&STARTDAY;&STARTHOUR;00 &ENDYEAR;&ENDMONTH;&ENDDAY;&ENDHOUR;00 12:00:00</cycledef>
+
+  <log>
+    <cyclestr>&LOGDIR;/logfiles2/workflow_@Y@m@d@H.log</cyclestr>
+  </log>
+
+
+<!--  ******************************************************************  -->
+<!--  *************************Python plotting**************************  -->
+
+<!-- allvars test script -->
+
+  <task name="makeplots_4panel_1" cycledefs="conus" maxtries="1">
+
+  &PLOT_RESERVATION;
+  &PLOT_RESOURCES;
+  <nodes>1:ppn=12</nodes>
+    <command>&PYTHONDIR;/create_4panel/launchALLtest</command>
+    <jobname><cyclestr>makeplots_4panel</cyclestr></jobname>
+    <join><cyclestr>&PYTHONDIR;/create_4panel/log.4panel1.@Y@m@d@H.out</cyclestr></join>
+
+    <envar>
+      <name>USER</name><value>&USER;</value>
+    </envar>
+    <envar>
+      <name>CDATE</name><value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name><value><cyclestr>@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>fhr</name><value>60</value>
+    </envar>
+
+    <dependency>
+      <and>
+        <datadep age="05:00"><cyclestr>&COMNAM;/nam.@Y@m@d/nam.t@Hz.conusnest.hiresf24.tm00.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMHRRR;/hrrr.@Y@m@d/conus/hrrr.t@Hz.wrfprsf24.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMX;/fv3lamx.@Y@m@d/@H/fv3lam.t@Hz.conus.f24.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f24.grib2</cyclestr></datadep>
+      </and>
+    </dependency>
+
+  </task>
+
+
+  <task name="makeplots_4panel_2" cycledefs="conus" maxtries="1">
+
+  &PLOT_RESERVATION;
+  &PLOT_RESOURCES;
+  <nodes>1:ppn=18</nodes>
+    <command>&PYTHONDIR;/create_4panel/launchALL2test</command>
+    <jobname><cyclestr>makeplots_4panel_2</cyclestr></jobname>
+    <join><cyclestr>&PYTHONDIR;/create_4panel/log.4panel2.@Y@m@d@H.out</cyclestr></join>
+
+    <envar>
+      <name>USER</name><value>&USER;</value>
+    </envar>
+    <envar>
+      <name>CDATE</name><value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name><value><cyclestr>@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>fhr</name><value>24</value>
+    </envar>
+
+    <dependency>
+      <and>
+        <datadep age="05:00"><cyclestr>&COMNAM;/nam.@Y@m@d/nam.t@Hz.conusnest.hiresf24.tm00.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMHRRR;/hrrr.@Y@m@d/conus/hrrr.t@Hz.wrfprsf24.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMX;/fv3lamx.@Y@m@d/@H/fv3lam.t@Hz.conus.f24.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f24.grib2</cyclestr></datadep>
+      </and>
+    </dependency>
+
+  </task>
+
+
+  <task name="makeplots_4panel_3" cycledefs="conus" maxtries="1">
+
+  &PLOT_RESERVATION;
+  &PLOT_RESOURCES;
+  <nodes>1:ppn=18</nodes>
+    <command>&PYTHONDIR;/create_4panel/launchALL3test</command>
+    <jobname><cyclestr>makeplots_4panel_3</cyclestr></jobname>
+    <join><cyclestr>&PYTHONDIR;/create_4panel/log.4panel3.@Y@m@d@H.out</cyclestr></join>
+
+    <envar>
+      <name>USER</name><value>&USER;</value>
+    </envar>
+    <envar>
+      <name>CDATE</name><value><cyclestr>@Y@m@d@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>cyc</name><value><cyclestr>@H</cyclestr></value>
+    </envar>
+    <envar>
+      <name>fhr</name><value>0</value>
+    </envar>
+
+    <dependency>
+      <and>
+        <datadep age="05:00"><cyclestr>&COMNAM;/nam.@Y@m@d/nam.t@Hz.conusnest.hiresf24.tm00.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMHRRR;/hrrr.@Y@m@d/conus/hrrr.t@Hz.wrfprsf24.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMX;/fv3lamx.@Y@m@d/@H/fv3lam.t@Hz.conus.f24.grib2</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f24.grib2</cyclestr></datadep>
+      </and>
+    </dependency>
+
+  </task>
+
+
+
+
+</workflow>
+

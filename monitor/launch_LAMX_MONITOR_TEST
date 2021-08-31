@@ -1,0 +1,31 @@
+#!/bin/ksh
+set -x
+
+USER=Benjamin.Blake
+CDATE=2021080500
+cyc=00
+
+echo 'into launchMONITOR'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/.bashrc
+
+mkdir -p /gpfs/dell3/stmp/${USER}
+mkdir -p /gpfs/dell3/stmp/${USER}/monitor
+mkdir -p /gpfs/dell3/stmp/${USER}/monitor/$CDATE
+cd /gpfs/dell3/stmp/${USER}/monitor/$CDATE
+
+# Retrieve placeholder for each possible image
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder.png Locations_lamx.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder.png TA_lamx.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder.png W_lamx.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder.png UA_lamx.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder.png VA_lamx.png 
+
+#python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/monitor_lamx.py /gpfs/dell6/ptmp/emc.campara/regional_forecast_tm00_rrfs_$CDATE $CDATE
+#python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/monitor_lamx.py /gpfs/dell6/stmp/emc.campara/fv3lamx_test/tmpnwprd/regional_forecast_tm00_rrfs_$CDATE $CDATE
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/monitor_lamx.py /gpfs/dell6/stmp/emc.campara/fv3lamx_test/tmpnwprd/regional_forecast_tm00_rrfs_$CDATE $CDATE
+#python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/monitor_lamx.py /gpfs/dell2/ptmp/Benjamin.Blake/$CDATE $CDATE
+
+exit
+
+

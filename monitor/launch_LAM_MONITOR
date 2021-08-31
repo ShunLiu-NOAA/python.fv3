@@ -1,0 +1,28 @@
+#!/bin/ksh
+set -x
+
+#USER=Shun.Liu
+#CDATE=2021021900
+#cyc=00
+
+echo 'into launchMONITOR'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/bin/loadp.sh
+
+mkdir -p /gpfs/dell3/stmp/${USER}
+mkdir -p /gpfs/dell3/stmp/${USER}/monitor
+mkdir -p /gpfs/dell3/stmp/${USER}/monitor/$CDATE
+cd /gpfs/dell3/stmp/${USER}/monitor/$CDATE
+
+# Retrieve placeholder for each possible image
+cp /gpfs/dell2/emc/modeling/noscrub/Shun.Liu/python.fv3/monitor/Placeholder.png Locations_lam.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Shun.Liu/python.fv3/monitor/Placeholder.png TA_lam.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Shun.Liu/python.fv3/monitor/Placeholder.png W_lam.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Shun.Liu/python.fv3/monitor/Placeholder.png UA_lam.png 
+cp /gpfs/dell2/emc/modeling/noscrub/Shun.Liu/python.fv3/monitor/Placeholder.png VA_lam.png 
+
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/monitor_lam.py /gpfs/dell4/stmp/emc.campara/fv3lam/tmpnwprd/regional_forecast_tm00_rrfs_$CDATE $CDATE
+
+exit
+
+

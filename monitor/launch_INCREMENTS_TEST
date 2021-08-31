@@ -1,0 +1,71 @@
+#!/bin/ksh
+set -x
+
+USER=Benjamin.Blake
+CDATE=2021031112
+cyc=12
+
+PDY=`echo $CDATE | cut -c1-8`
+
+if [ $cyc = 00 ]; then
+  cycm1=12
+  PDYm1=20210311
+elif [ $cyc = 12 ]; then
+  cycm1=00
+  PDYm1=`echo $CDATE | cut -c1-8`
+fi
+
+echo 'into launchINCREMENTS'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/.bashrc
+module load imagemagick/6.9.9-25
+
+mkdir -p /gpfs/dell3/stmp/${USER}
+mkdir -p /gpfs/dell3/stmp/${USER}/increments
+mkdir -p /gpfs/dell3/stmp/${USER}/increments/$CDATE
+cd /gpfs/dell3/stmp/${USER}/increments/$CDATE
+
+# Retrieve placeholder for the tm06 images that are unavailable
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder2.png tlvl1_conus_tm06.png
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder2.png qlvl1_conus_tm06.png
+cp /gpfs/dell2/emc/modeling/noscrub/Benjamin.Blake/python.fv3/monitor/Placeholder2.png wspdlvl1_conus_tm06.png
+
+# Retrieve GDAS file for tm06 and use wgrib2 to interpolate to the correct output grid
+gridspecs="lambert:262.5:38.5:38.5 237.826355:1746:3000 21.885885:1014:3000"
+wgrib2 /gpfs/dell1/nco/ops/com/gfs/prod/gdas.${PDYm1}/${cycm1}/gdas.t${cycm1}z.pgrb2.0p25.f006 -new_grid_winds grid -new_grid ${gridspecs} gdas.t${cyc}z.guess.tm06.grib2
+wgrib2 /gpfs/dell1/nco/ops/com/gfs/prod/gdas.${PDYm1}/${cycm1}/gdas.t${cycm1}z.pgrb2b.0p25.f006 -new_grid_winds grid -new_grid ${gridspecs} gdas.t${cyc}z.guess2.tm06.grib2
+
+# Run Python scripts for each tmmark
+#tmmarklist="tm00 tm01 tm02 tm03 tm04 tm05 tm06"
+tmmarklist="tm06"
+for tmmark in $tmmarklist; do
+
+  python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/increments_lamda_test.py ${CDATE} ${tmmark}
+#  python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/monitor/increments_lamdax.py ${CDATE} ${tmmark}
+
+#  convert lamda_tlvl1_conus_${tmmark}.png lamdax_tlvl1_conus_${tmmark}.png +append tlvl1_conus_${tmmark}.png
+#  convert lamda_qlvl1_conus_${tmmark}.png lamdax_qlvl1_conus_${tmmark}.png +append qlvl1_conus_${tmmark}.png
+#  convert lamda_wspdlvl1_conus_${tmmark}.png lamdax_wspdlvl1_conus_${tmmark}.png +append wspdlvl1_conus_${tmmark}.png
+#  convert lamda_slp_conus_${tmmark}.png lamdax_slp_conus_${tmmark}.png +append slp_conus_${tmmark}.png
+#  convert lamda_pw_conus_${tmmark}.png lamdax_pw_conus_${tmmark}.png +append pw_conus_${tmmark}.png
+#  convert lamda_z850_conus_${tmmark}.png lamdax_z850_conus_${tmmark}.png +append z850_conus_${tmmark}.png
+#  convert lamda_z700_conus_${tmmark}.png lamdax_z700_conus_${tmmark}.png +append z700_conus_${tmmark}.png
+#  convert lamda_z500_conus_${tmmark}.png lamdax_z500_conus_${tmmark}.png +append z500_conus_${tmmark}.png
+#  convert lamda_z250_conus_${tmmark}.png lamdax_z250_conus_${tmmark}.png +append z250_conus_${tmmark}.png
+#  convert lamda_t850_conus_${tmmark}.png lamdax_t850_conus_${tmmark}.png +append t850_conus_${tmmark}.png
+#  convert lamda_t700_conus_${tmmark}.png lamdax_t700_conus_${tmmark}.png +append t700_conus_${tmmark}.png
+#  convert lamda_t500_conus_${tmmark}.png lamdax_t500_conus_${tmmark}.png +append t500_conus_${tmmark}.png
+#  convert lamda_t250_conus_${tmmark}.png lamdax_t250_conus_${tmmark}.png +append t250_conus_${tmmark}.png
+#  convert lamda_q850_conus_${tmmark}.png lamdax_q850_conus_${tmmark}.png +append q850_conus_${tmmark}.png
+#  convert lamda_q700_conus_${tmmark}.png lamdax_q700_conus_${tmmark}.png +append q700_conus_${tmmark}.png
+#  convert lamda_q500_conus_${tmmark}.png lamdax_q500_conus_${tmmark}.png +append q500_conus_${tmmark}.png
+#  convert lamda_wspd850_conus_${tmmark}.png lamdax_wspd850_conus_${tmmark}.png +append wspd850_conus_${tmmark}.png
+#  convert lamda_wspd700_conus_${tmmark}.png lamdax_wspd700_conus_${tmmark}.png +append wspd700_conus_${tmmark}.png
+#  convert lamda_wspd500_conus_${tmmark}.png lamdax_wspd500_conus_${tmmark}.png +append wspd500_conus_${tmmark}.png
+#  convert lamda_wspd250_conus_${tmmark}.png lamdax_wspd250_conus_${tmmark}.png +append wspd250_conus_${tmmark}.png
+
+done
+
+exit
+
+

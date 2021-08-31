@@ -1,0 +1,22 @@
+#!/bin/ksh
+set -x
+
+#USER=Benjamin.Blake
+#CDATE=2021081300
+#cyc=00
+#fhr=24
+
+echo 'into launchALL'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/bin/loadp.sh
+
+#mkdir -p /gpfs/dell2/stmp/${USER}
+#mkdir -p /gpfs/dell2/stmp/${USER}/fv3test
+#mkdir -p /gpfs/dell2/stmp/${USER}/fv3test/$cyc
+cd /gpfs/dell2/stmp/${USER}/fv3test/$cyc
+
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/create_4panel/plot_allvars3.py $CDATE $fhr
+
+exit
+
+

@@ -1,0 +1,33 @@
+#!/bin/ksh
+set -x
+
+USER=Benjamin.Blake
+CDATE=2021031400
+cyc=00
+#fhr=48
+
+echo 'into launchALL'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/bin/loadp.sh
+
+mkdir -p /gpfs/dell3/stmp/${USER}
+mkdir -p /gpfs/dell3/stmp/${USER}/fv3test
+mkdir -p /gpfs/dell3/stmp/${USER}/fv3test/$CDATE
+cd /gpfs/dell3/stmp/${USER}/fv3test/$CDATE
+
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 37
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 38
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 39
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 40
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 41
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 42
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 43
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 44
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 45
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 46
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 47
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_lamxs/plot_allvars.py $CDATE 48
+
+exit
+
+

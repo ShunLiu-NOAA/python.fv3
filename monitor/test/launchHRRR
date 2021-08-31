@@ -1,0 +1,22 @@
+#!/bin/ksh
+set -x
+
+USER=Benjamin.Blake
+sdate=2021020118
+PDY=20210201
+cyc=18
+
+echo 'into launchrap'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/.bashrc
+
+mkdir -p /gpfs/dell3/stmp/${USER}
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor/$PDY
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor/$PDY/$cyc
+cd /gpfs/dell3/stmp/${USER}/damonitor/$PDY/$cyc
+
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_hrrr.py -d /gpfs/hps/nco/ops/com/hrrr/prod/hrrr.${PDY}/conus -s ${sdate} -e ${sdate} -t tm00 -f
+
+exit
+

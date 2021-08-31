@@ -1,0 +1,28 @@
+#!/bin/ksh
+set -x
+
+USER=Benjamin.Blake
+CDATE=2020112500
+cyc=00
+fhr=00
+#dom='conus'
+
+echo 'into launchALL'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/bin/loadp.sh
+
+mkdir -p /gpfs/dell2/stmp/${USER}
+mkdir -p /gpfs/dell2/stmp/${USER}/fv3test
+mkdir -p /gpfs/dell2/stmp/${USER}/fv3test/$cyc
+cd /gpfs/dell2/stmp/${USER}/fv3test/$cyc
+
+PDY=`echo $CDATE | cut -c1-8`
+gridspecs="lambert:262.5:38.5:38.5 237.826355:1746:3000 21.885885:1014:3000"
+wgrib2 /gpfs/dell1/nco/ops/com/nam/prod/nam.${PDY}/nam.t${cyc}z.conusnest.hiresf${fhr}.tm00.grib2 -new_grid_winds grid -new_grid ${gridspecs} nam.t${cyc}z.conusnest.hiresf${fhr}.tm00.grib2
+sleep 60
+
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/python.fv3/compare_nam/plot_allvars1_test.py $CDATE $fhr
+
+exit
+
+

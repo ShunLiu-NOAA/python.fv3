@@ -1,0 +1,28 @@
+#!/bin/ksh
+set -x
+
+#USER=Benjamin.Blake
+#sdate=2021012800
+#PDY=20210128
+#cyc=00
+
+echo 'into launchlamdax'
+. /usrx/local/prod/lmod/lmod/init/sh
+source /u/${USER}/.bashrc
+
+mkdir -p /gpfs/dell3/stmp/${USER}
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor/$PDY
+mkdir -p /gpfs/dell3/stmp/${USER}/damonitor/$PDY/$cyc
+cd /gpfs/dell3/stmp/${USER}/damonitor/$PDY/$cyc
+
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_lamdax.py -d /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc} -s ${sdate} -e ${sdate} -t tm00 -f
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_lamdax.py -d /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc} -s ${sdate} -e ${sdate} -t tm01 -f
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_lamdax.py -d /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc} -s ${sdate} -e ${sdate} -t tm02 -f
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_lamdax.py -d /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc} -s ${sdate} -e ${sdate} -t tm03 -f
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_lamdax.py -d /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc} -s ${sdate} -e ${sdate} -t tm04 -f
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_lamdax.py -d /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc} -s ${sdate} -e ${sdate} -t tm05 -f
+python /gpfs/dell2/emc/modeling/noscrub/${USER}/PyGSI/scripts/plot_gsi_stat_exp_lamdax.py -d /gpfs/dell5/ptmp/emc.campara/fv3lamda/fv3lamda.${PDY}/${cyc} -s ${sdate} -e ${sdate} -t tm06 -f
+
+exit
+
