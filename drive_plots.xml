@@ -4,26 +4,28 @@
 
 <!ENTITY STARTYEAR "2021">
 <!ENTITY STARTMONTH "08">
-<!ENTITY STARTDAY "28">
-<!ENTITY STARTHOUR "12">
+<!ENTITY STARTDAY "31">
+<!ENTITY STARTHOUR "00">
 
 <!ENTITY ENDYEAR "2021">
 <!ENTITY ENDMONTH "08">
-<!ENTITY ENDDAY "28">
-<!ENTITY ENDHOUR "12">
+<!ENTITY ENDDAY "31">
+<!ENTITY ENDHOUR "00">
 
 <!ENTITY USER "Shun.Liu">
 <!ENTITY ACCOUNT "RRFS-T2O">
 
 <!ENTITY LOGDIR "/gpfs/dell1/ptmp/&USER;">
 <!ENTITY OUTDIR "/gpfs/dell4/ptmp/emc.campara">
+<!ENTITY OUTDIR1 "/gpfs/dell1/ptmp/Shun.Liu">
+<!ENTITY OUTDIR2 "/gpfs/dell6/ptmp/emc.campara">
 <!ENTITY OUTDIR2 "/gpfs/dell6/ptmp/emc.campara">
 <!ENTITY OUTDIR3 "/gpfs/dell5/ptmp/emc.campara">
 <!ENTITY OUTDIR4 "/gpfs/dell2/ptmp/emc.campara">
 <!ENTITY COMLAM "&OUTDIR;/fv3lam">
 <!ENTITY COMLAMX "&OUTDIR2;/fv3lamx">
 <!ENTITY COMLAMDA "&OUTDIR3;/fv3lamda">
-<!ENTITY COMLAMDAX "&OUTDIR4;/fv3lamdax">
+<!ENTITY COMLAMDAX "&OUTDIR1;/rdasConus">
 <!ENTITY COMGFS "/gpfs/dell1/nco/ops/com/gfs/prod">
 <!ENTITY COMNAM "/gpfs/dell1/nco/ops/com/nam/prod">
 <!ENTITY COMHRRR "/gpfs/hps/nco/ops/com/hrrr/prod">
@@ -60,7 +62,6 @@
 
 <!-- Analysis increments -->
 
-<?ignore
   <metatask>
     <!--var name="tmmark">tm00 tm01 tm02 tm03 tm04 tm05 tm06</var-->
     <var name="tmmark">tm06</var>
@@ -110,19 +111,19 @@
           <datadep age="05:00"><cyclestr>&COMLAMDA;/fv3lamda.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm04.grib2</cyclestr></datadep>
           <datadep age="05:00"><cyclestr>&COMLAMDA;/fv3lamda.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm05.grib2</cyclestr></datadep>
           <datadep age="05:00"><cyclestr>&COMLAMDA;/fv3lamda.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm06.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f00.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f00.tm01.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f00.tm02.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f00.tm03.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f00.tm04.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f00.tm05.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f00.tm06.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm01.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm02.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm03.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm04.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm05.grib2</cyclestr></datadep>
-          <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.conus.f01.tm06.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f00.tm00.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f00.tm01.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f00.tm02.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f00.tm03.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f00.tm04.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f00.tm05.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f00.tm06.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f01.tm01.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f01.tm02.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f01.tm03.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f01.tm04.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f01.tm05.grib2</cyclestr></datadep>
+          <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.CONUS.f01.tm06.grib2</cyclestr></datadep>
           <datadep age="05:00"><cyclestr offset="-12:00:00">&COMGFS;/gdas.@Y@m@d/@H/atmos/gdas.t@Hz.pgrb2.0p25.f006</cyclestr></datadep>
           <datadep age="05:00"><cyclestr offset="-12:00:00">&COMGFS;/gdas.@Y@m@d/@H/atmos/gdas.t@Hz.pgrb2b.0p25.f006</cyclestr></datadep>
         </and>
@@ -131,6 +132,7 @@
     </task>
   </metatask>
 
+<?ignore
 <!-- LAMDA/LAMDA-X vertical profiles -->
 
   <task name="monitor_profiles" cycledefs="conus" maxtries="3">
