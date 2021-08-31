@@ -5,12 +5,12 @@
 <!ENTITY STARTYEAR "2021">
 <!ENTITY STARTMONTH "08">
 <!ENTITY STARTDAY "31">
-<!ENTITY STARTHOUR "12">
+<!ENTITY STARTHOUR "00">
 
 <!ENTITY ENDYEAR "2021">
 <!ENTITY ENDMONTH "08">
 <!ENTITY ENDDAY "31">
-<!ENTITY ENDHOUR "12">
+<!ENTITY ENDHOUR "00">
 
 <!ENTITY USER "Shun.Liu">
 <!ENTITY ACCOUNT "RRFS-T2O">
@@ -62,6 +62,7 @@
 
 <!-- Analysis increments -->
 
+  <?ignore
   <metatask>
     <!--var name="tmmark">tm00 tm01 tm02 tm03 tm04 tm05 tm06</var-->
     <var name="tmmark">tm06</var>
@@ -131,8 +132,8 @@
 
     </task>
   </metatask>
+?>
 
-<?ignore
 <!-- LAMDA/LAMDA-X vertical profiles -->
 
   <task name="monitor_profiles" cycledefs="conus" maxtries="3">
@@ -166,18 +167,19 @@
         <datadep age="05:00"><cyclestr>&COMLAMDA;/fv3lamda.@Y@m@d/@H/fv3lam.t@Hz.fits.tm04</cyclestr></datadep>
         <datadep age="05:00"><cyclestr>&COMLAMDA;/fv3lamda.@Y@m@d/@H/fv3lam.t@Hz.fits.tm05</cyclestr></datadep>
         <datadep age="05:00"><cyclestr>&COMLAMDA;/fv3lamda.@Y@m@d/@H/fv3lam.t@Hz.fits.tm06</cyclestr></datadep>
-        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.fits.tm00</cyclestr></datadep>
-        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.fits.tm01</cyclestr></datadep>
-        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.fits.tm02</cyclestr></datadep>
-        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.fits.tm03</cyclestr></datadep>
-        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.fits.tm04</cyclestr></datadep>
-        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.fits.tm05</cyclestr></datadep>
-        <datadep age="05:00"><cyclestr>&COMLAMDAX;/fv3lamdax.@Y@m@d/@H/fv3lam.t@Hz.fits.tm06</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.fits.tm00</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.fits.tm01</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.fits.tm02</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.fits.tm03</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.fits.tm04</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.fits.tm05</cyclestr></datadep>
+        <datadep age="05:00"><cyclestr>&COMLAMDAX;/rdas.@Y@m@d/@H/rrfs.t@Hz.fits.tm06</cyclestr></datadep>
       </and>
     </dependency>
 
   </task>
 
+<?ignore
 <!-- LAMDA histograms -->
 
   <task name="monitor_hist_lamda" cycledefs="conus" maxtries="3">
